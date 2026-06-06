@@ -1,6 +1,5 @@
 fastapi
 uvicorn
 openai
+motor
 python-dotenv
-pymongo
-dnspython
