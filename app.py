@@ -1,25 +1,32 @@
+from fastapi import FastAPI
 from openai import OpenAI
-from config import CEREBRAS_API_KEY, MODEL_NAME
+import os
+
+app = FastAPI()
 
 client = OpenAI(
-    api_key=CEREBRAS_API_KEY,
+    api_key=os.getenv("CEREBRAS_API_KEY"),
     base_url="https://api.cerebras.ai/v1"
 )
+
+@app.get("/")
+async def home():
+    return {"status": "alive"}
 
 @app.get("/test")
 async def test():
 
     response = client.chat.completions.create(
-        model=MODEL_NAME,
+        model=os.getenv("MODEL_NAME", "gpt-oss-120b"),
         messages=[
             {
                 "role": "user",
                 "content": "Say hello"
             }
-        ],
-        max_tokens=20
+        ]
     )
 
     return {
         "response": response.choices[0].message.content
     }
+    
