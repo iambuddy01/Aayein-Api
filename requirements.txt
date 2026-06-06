@@ -1,3 +1,6 @@
 fastapi
 uvicorn
 openai
+python-dotenv
+pymongo
+dnspython
